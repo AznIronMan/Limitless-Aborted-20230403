@@ -105,3 +105,6 @@ dist
 
 #commit.sh file
 commit.sh 
+
+#hide db folder for now
+/db
