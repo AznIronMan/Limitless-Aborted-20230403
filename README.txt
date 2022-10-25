@@ -75,7 +75,8 @@ DEVELOPMENT NOTES
 ALPHA 0.1.000 / 2022.10.24-2026 -- "THE REBIRTH"
 
 - node.js foundation established 
-- added sqlite, fs-extra modules
+- added sqlite, fs-extra, dotenv modules
+- added .env file placeholder
 - updated readme to reflect new changes
 - created new github (https://github.com/AznBlusuazn/Limitless) and archived the former githubs
 - archived githubs are https://github.com/AznBlusuazn/Limitless-OldVB and https://github.com/AznBlusuazn/Arena
