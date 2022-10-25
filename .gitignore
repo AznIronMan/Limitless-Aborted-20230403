@@ -104,4 +104,4 @@ dist
 .tern-port
 
 #commit.sh file
-commit.sh
+commit.sh 
