@@ -79,6 +79,8 @@ ALPHA 0.1.000 / 2022.10.24-2026 -- "THE REBIRTH"
 - added .env file placeholder
 - added filer and startup functions
 - updated readme to reflect new changes
+- updated license
+- added default database from archived builds (as placeholder for now)
 - created new github (https://github.com/AznBlusuazn/Limitless) and archived the former githubs
 - archived githubs are https://github.com/AznBlusuazn/Limitless-OldVB and https://github.com/AznBlusuazn/Arena
 
