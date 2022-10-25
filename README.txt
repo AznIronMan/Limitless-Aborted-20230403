@@ -72,8 +72,14 @@ DEVELOPMENT NOTES
 
 [CURRENT UPDATE]
 
-ALPHA 0.1.000 / 2022.10.24-2026 -- "THE REBIRTH"
+ALPHA 0.2.000.0000 - "THE REBIRTH"
 
+2022.10.25-1139
+- removed sqlite for sqlite3 and nw-gyp
+- created db functions with dbUpdate, dbGetVal, dbGetCol, dbGetRow for db queries
+- added default db name for env
+
+2022.10.24-2026
 - node.js foundation established 
 - added sqlite, fs-extra, dotenv modules
 - added .env file placeholder

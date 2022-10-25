@@ -20,6 +20,7 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "fs-extra": "^10.1.0",
-    "sqlite": "^4.1.2"
+    "nw-gyp": "^3.6.6",
+    "sqlite3": "^5.1.2"
   }
 }
