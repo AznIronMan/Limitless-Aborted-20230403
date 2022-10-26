@@ -1,16 +1,17 @@
-const fs = require('fs-extra')
+const fs = require('fs-extra');
 
-const fileCheck = (filepath) => {
-    try {
-        if (fs.existsSync(filepath)) {
-            return (Boolean(true))
-        } else {
-            return (Boolean(false))
-        }
-    } catch (err) {
-        console.error(err)
+const fileCheck = filepath => {
+	try {
+		if (fs.existsSync(filepath)) {
+			return Boolean(true);
+		} else {
+			return Boolean(false);
+		}
+	} catch (err) {
+		console.error(err);
+	}
+};
 
-    }
-}
-
-exports.fileCheck = fileCheck
+module.exports = {
+	fileCheck
+};
