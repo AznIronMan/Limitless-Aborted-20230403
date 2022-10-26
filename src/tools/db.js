@@ -54,50 +54,33 @@ const dbGetRow = async (tCol, tbl, sCol, sVal, misc) => {
 };
 
 const dbUpdate = async (tbl, tCol, tVal, sCol, sVal, misc) => {
-	let retVal = new Boolean();
 	dbOpen();
 	let query = `UPDATE ${tbl} SET ${tCol} = '${tVal}' WHERE ${sCol} = '${sVal}'`;
 	if (misc != undefined) {
 		query += ` ${misc}`;
 	}
 	const answer = (await aasql.push(query)).message;
-	if (answer === 'Succeeded') {
-		retVal = Boolean(true);
-	} else {
-		retVal = Boolean(false);
-	}
 	dbClose();
-	return retVal;
+	return answer === 'Succeeded'; // returns a true or false boolean
 };
 
 const dbAdd = async (tbl, vals) => {
-	let retVal = new Boolean();
 	dbOpen();
 	let query = `INSERT INTO ${tbl} VALUES (${vals})`;
 
 	const answer = (await aasql.push(query)).message;
 	console.log(answer);
-	if (answer === 'Succeeded') {
-		retVal = Boolean(true);
-	} else {
-		retVal = Boolean(false);
-	}
 	dbClose();
-	return retVal;
+	return answer === 'Succeeded'; // returns a true or false boolean
 };
 
 const dbDel = async (tbl, tCol, tVal) => {
-	let retVal = new Boolean();
 	dbOpen();
 	let query = `DELETE FROM ${tbl} WHERE ${tCol} = ${tVal}`;
 	console.log(query);
 	const answer = (await aasql.push(query)).message;
 	console.log(answer);
-	if (answer === 'Succeeded') {
-		retVal = Boolean(true);
-	} else {
-		retVal = Boolean(false);
-	}
+	return answer === 'Succeeded'; // returns a true or false boolean
 };
 
 module.exports = {
