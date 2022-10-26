@@ -74,10 +74,11 @@ DEVELOPMENT NOTES
 
 ALPHA 0.2.000.0000 - "THE REBIRTH"
 
-2022.10.25-1836
+2022.10.25-1931
 - added aa-sqlite module
 - revamp db with aa-sqlite queries and removed the sqlite3 queries
 - added db folder to env
+- added dbAdd and dbDel to db queries
 
 2022.10.25-1139
 - removed sqlite for sqlite3 and nw-gyp

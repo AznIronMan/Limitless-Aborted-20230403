@@ -1,5 +1,6 @@
 require('dotenv').config()
 const aasql = require('aa-sqlite')
+const sql3 = require('sqlite3').verbose();
 const defdb = `${process.env.L_DBFOLDER}${process.env.L_DATABASE}`
 
 const dbOpen = async (db) => {
@@ -65,6 +66,39 @@ const dbUpdate = async (tbl, tCol, tVal, sCol, sVal, misc) => {
     } else {
         retVal = Boolean(false)
     }
+    dbClose()
+    return retVal
+}
+
+const dbAdd = async (tbl, vals) => {
+    let retVal = new Boolean
+    dbOpen()
+    let query = `INSERT INTO ${tbl} VALUES (${vals})`
+
+    const answer = (await aasql.push(query)).message
+    console.log(answer)
+    if (answer === "Succeeded") {
+        retVal = Boolean(true)
+    } else {
+        retVal = Boolean(false)
+    }
+    dbClose()
+    return retVal
+}
+
+const dbDel = async (tbl, tCol, tVal) => {
+    let retVal = new Boolean
+    dbOpen()
+    let query = `DELETE FROM ${tbl} WHERE ${tCol} = ${tVal}`
+    console.log(query)
+    const answer = (await aasql.push(query)).message
+    console.log(answer)
+    if (answer === "Succeeded") {
+        retVal = Boolean(true)
+    } else {
+        retVal = Boolean(false)
+    }
+    dbClose()
     return retVal
 }
 
@@ -72,3 +106,5 @@ exports.dbGetVal = dbGetVal
 exports.dbGetCol = dbGetCol
 exports.dbGetRow = dbGetRow
 exports.dbUpdate = dbUpdate
+exports.dbAdd = dbAdd
+exports.dbDel = dbDel
