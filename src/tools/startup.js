@@ -18,7 +18,7 @@ const startupChecks = async () => {
     console.log('Modules',nm)
     console.log('DB Folder',db)
     console.log('Default DB',defdb)
-    console.log ('Query Test',String(await dbGetRow('idxID','all_index','idxActive','1')))
+    console.log ('Query Test',Boolean(await dbUpdate('dbInfo','dbVersion','0.2.000.0000','dbName','Default')))
 }
 
 exports.startupChecks = startupChecks

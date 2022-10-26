@@ -1,79 +1,70 @@
 require('dotenv').config()
-const sqlite3 = require('sqlite3').verbose()
-const db = new sqlite3.Database(`./db/${process.env.L_DATABASE}`)
+const aasql = require('aa-sqlite')
+const defdb = `${process.env.L_DBFOLDER}${process.env.L_DATABASE}`
 
-const dbGetVal = (tCol, tbl, sCol, sVal, misc) => {
-    return new Promise((resolve,reject) => {
-        let sql = `SELECT ${tCol} FROM ${tbl} WHERE ${sCol} = '${sVal}'`
-        if(misc != undefined ) {
-            sql += ` ${misc}`
-        }
-        db.get(sql, (err, rows) => { 
-            if (err) {
-                return reject(err.message)
-            }
-            resolve(JSON.parse(JSON.stringify(rows))[tCol])
-        })
-    })
+const dbOpen = async (db) => {
+    if(db == undefined || db == null) {
+        db = String(defdb)
+    }
+    aasql.open(db)
 }
 
-const dbGetCol = (tbl, sCol, sVal, misc) => {
-    return new Promise((resolve,reject) => {
-        let sql = `SELECT * FROM ${tbl} WHERE ${sCol} = '${sVal}'`
-        if(misc != undefined ) {
-            sql += ` ${misc}`
-        }
-        db.all(sql, (err, rows) => { 
-            if (err) {
-                return reject(err.message)
-            }
-            resolve (JSON.stringify(rows))
-        })
-    })
+const dbClose = async () => {
+    aasql.close()
 }
 
-//Remember this:
-// const one = { test: JSON.stringify(rows)}
-// const two = JSON.parse(one.test);
-// resolve(JSON.stringify(two[1]))
+const dbGetVal = async (tCol, tbl, sCol, sVal, misc) => {
+    let retVal = []
+    dbOpen()
+    let query = `SELECT ${tCol} FROM ${tbl} WHERE ${sCol} = '${sVal}'`
+    if (misc != undefined) { 
+        query += ` ${misc}`
+    }
+    retVal = JSON.parse(JSON.stringify(await aasql.get(query)))[tCol]
+    dbClose()
+    return retVal
+}
 
-const dbGetRow = (tCol, tbl, sCol, sVal, misc) => {
-    return new Promise((resolve,reject) => {
-        let sql = `SELECT ${tCol} FROM ${tbl} WHERE ${sCol} = '${sVal}'`
-        if(misc != undefined ) {
-            sql += ` ${misc}`
-        }
-        let a, b, c
-        db.all(sql, (err, rows) => { 
-            if (err) {
-                return reject(err.message)
-            }
-            const obj = Object.keys(rows)
-            obj.forEach(function(obj) { b += rows[obj][tCol] + ","})
-            a = (b.replace(undefined,""))
-            a = a.substring(0,a.length-1)
-            c = JSON.stringify(a)
-            c = c.substring(1,c.length-1)
-            resolve(c)
-        })
+const dbGetCol = async (tbl, sCol, sVal, misc) => {
+    let retVal = []
+    dbOpen()
+    let query = `SELECT * FROM ${tbl} WHERE ${sCol} = '${sVal}'`
+    if (misc != undefined) { 
+        query += ` ${misc}`
+    }
+    retVal = JSON.stringify(await aasql.get(query, []))
+    dbClose()
+    return retVal
+}
+
+const dbGetRow = async (tCol, tbl, sCol, sVal, misc) => {
+    let retVal = []
+    dbOpen()
+    let query = `SELECT ${tCol} FROM ${tbl} WHERE ${sCol} = '${sVal}'`
+    if (misc != undefined) { 
+        query += ` ${misc}`
+    }
+    const r = await aasql.all(query, [])
+    await r.forEach(function(row) {
+        retVal.push((row[tCol]))
     })
+    dbClose()
+    return String(retVal)
 }
 
 const dbUpdate = async (tbl, tCol, tVal, sCol, sVal, misc) => {
-    let sql = `UPDATE '${tbl}' SET ${tCol} = '${tVal}' WHERE ${sCol} = '${sVal}'`
-    if(misc != undefined ) {
-        sql += ` ${misc}`
+    let retVal = new Boolean
+    dbOpen()
+    let query = `UPDATE ${tbl} SET ${tCol} = '${tVal}' WHERE ${sCol} = '${sVal}'`
+    if (misc != undefined) { 
+        query += ` ${misc}`
     }
-    db.run(sql, function(err) {
-        if (err) {
-            return console.error(err.message)
-        }
-        console.log(this)
-    })
-    db.close()
+    const answer = (await aasql.push(query)).message 
+    if(answer === "Succeeded") { retVal = Boolean(true) } else { retVal = Boolean(false) }
+    return retVal
 }
 
+exports.dbGetVal = dbGetVal
 exports.dbGetCol = dbGetCol
 exports.dbGetRow = dbGetRow
-exports.dbGetVal = dbGetVal
 exports.dbUpdate = dbUpdate
