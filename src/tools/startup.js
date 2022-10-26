@@ -14,11 +14,11 @@ const startupChecks = async () => {
     const db = fileCheck('./db')
     require('dotenv').config();
     const defdb = fileCheck(`./db/${process.env.L_DATABASE}`)
-    console.log('Env:',env)
-    console.log('Modules',nm)
-    console.log('DB Folder',db)
-    console.log('Default DB',defdb)
-    console.log ('Query Test',Boolean(await dbUpdate('dbInfo','dbVersion','0.2.000.0000','dbName','Default')))
+    console.log('Env:', env)
+    console.log('Modules', nm)
+    console.log('DB Folder', db)
+    console.log('Default DB', defdb)
+    console.log('Query Test', Boolean(await dbUpdate('dbInfo', 'dbVersion', '0.2.000.0000', 'dbName', 'Default')))
 }
 
 exports.startupChecks = startupChecks

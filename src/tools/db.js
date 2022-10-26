@@ -3,7 +3,7 @@ const aasql = require('aa-sqlite')
 const defdb = `${process.env.L_DBFOLDER}${process.env.L_DATABASE}`
 
 const dbOpen = async (db) => {
-    if(db == undefined || db == null) {
+    if (db == undefined || db == null) {
         db = String(defdb)
     }
     aasql.open(db)
@@ -17,7 +17,7 @@ const dbGetVal = async (tCol, tbl, sCol, sVal, misc) => {
     let retVal = []
     dbOpen()
     let query = `SELECT ${tCol} FROM ${tbl} WHERE ${sCol} = '${sVal}'`
-    if (misc != undefined) { 
+    if (misc != undefined) {
         query += ` ${misc}`
     }
     retVal = JSON.parse(JSON.stringify(await aasql.get(query)))[tCol]
@@ -29,7 +29,7 @@ const dbGetCol = async (tbl, sCol, sVal, misc) => {
     let retVal = []
     dbOpen()
     let query = `SELECT * FROM ${tbl} WHERE ${sCol} = '${sVal}'`
-    if (misc != undefined) { 
+    if (misc != undefined) {
         query += ` ${misc}`
     }
     retVal = JSON.stringify(await aasql.get(query, []))
@@ -41,11 +41,11 @@ const dbGetRow = async (tCol, tbl, sCol, sVal, misc) => {
     let retVal = []
     dbOpen()
     let query = `SELECT ${tCol} FROM ${tbl} WHERE ${sCol} = '${sVal}'`
-    if (misc != undefined) { 
+    if (misc != undefined) {
         query += ` ${misc}`
     }
     const r = await aasql.all(query, [])
-    await r.forEach(function(row) {
+    await r.forEach(function (row) {
         retVal.push((row[tCol]))
     })
     dbClose()
@@ -56,11 +56,15 @@ const dbUpdate = async (tbl, tCol, tVal, sCol, sVal, misc) => {
     let retVal = new Boolean
     dbOpen()
     let query = `UPDATE ${tbl} SET ${tCol} = '${tVal}' WHERE ${sCol} = '${sVal}'`
-    if (misc != undefined) { 
+    if (misc != undefined) {
         query += ` ${misc}`
     }
-    const answer = (await aasql.push(query)).message 
-    if(answer === "Succeeded") { retVal = Boolean(true) } else { retVal = Boolean(false) }
+    const answer = (await aasql.push(query)).message
+    if (answer === "Succeeded") {
+        retVal = Boolean(true)
+    } else {
+        retVal = Boolean(false)
+    }
     return retVal
 }
 
