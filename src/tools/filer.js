@@ -12,6 +12,17 @@ const fileCheck = filepath => {
 	}
 };
 
+const createTextFile = (filepath, filename, text) => {
+	try {
+		fs.outputFileSync(`${filepath}/${filename}`, text);
+		return Boolean(true);
+	} catch (err) {
+		console.error(err);
+		return Boolean(false);
+	}
+};
+
 module.exports = {
-	fileCheck
+	fileCheck,
+	createTextFile
 };

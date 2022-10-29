@@ -1,10 +1,10 @@
 const process = require('node:process');
 const aasql = require('aa-sqlite');
-const sql3 = require('sqlite3').verbose();
+//const sql3 = require('sqlite3').verbose();
 const defdb = `${process.env.L_DBFOLDER}${process.env.L_DATABASE}`;
 
 const dbOpen = async db => {
-	if (db == undefined || db == null) {
+	if (db === undefined || db === null) {
 		db = String(defdb);
 	}
 	aasql.open(db);
@@ -18,7 +18,7 @@ const dbGetVal = async (tCol, tbl, sCol, sVal, misc) => {
 	let retVal = [];
 	dbOpen();
 	let query = `SELECT ${tCol} FROM ${tbl} WHERE ${sCol} = '${sVal}'`;
-	if (misc != undefined) {
+	if (misc !== undefined) {
 		query += ` ${misc}`;
 	}
 	retVal = JSON.parse(JSON.stringify(await aasql.get(query)))[tCol];
@@ -30,7 +30,7 @@ const dbGetCol = async (tbl, sCol, sVal, misc) => {
 	let retVal = [];
 	dbOpen();
 	let query = `SELECT * FROM ${tbl} WHERE ${sCol} = '${sVal}'`;
-	if (misc != undefined) {
+	if (misc !== undefined) {
 		query += ` ${misc}`;
 	}
 	retVal = JSON.stringify(await aasql.get(query, []));
@@ -42,7 +42,7 @@ const dbGetRow = async (tCol, tbl, sCol, sVal, misc) => {
 	let retVal = [];
 	dbOpen();
 	let query = `SELECT ${tCol} FROM ${tbl} WHERE ${sCol} = '${sVal}'`;
-	if (misc != undefined) {
+	if (misc !== undefined) {
 		query += ` ${misc}`;
 	}
 	const r = await aasql.all(query, []);
@@ -56,7 +56,7 @@ const dbGetRow = async (tCol, tbl, sCol, sVal, misc) => {
 const dbUpdate = async (tbl, tCol, tVal, sCol, sVal, misc) => {
 	dbOpen();
 	let query = `UPDATE ${tbl} SET ${tCol} = '${tVal}' WHERE ${sCol} = '${sVal}'`;
-	if (misc != undefined) {
+	if (misc !== undefined) {
 		query += ` ${misc}`;
 	}
 	const answer = (await aasql.push(query)).message;
