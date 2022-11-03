@@ -83,32 +83,36 @@ const writeLog = (message, type) => {
 		});
 	}
 	const logger = log4js.getLogger();
-	switch (type) {
-		case 't':
-			logger.level = 'trace';
-			logger.trace(message);
-			break;
-		case 'd':
-			logger.level = 'debug';
-			logger.debug(message);
-			break;
-		case 'w':
-			logger.level = 'warn';
-			logger.warn(message);
-			break;
-		case 'e':
-			logger.level = 'error';
-			logger.error(message);
-			break;
-		case 'f':
-			logger.level = 'fatal';
-			logger.fatal(message);
-			break;
-		default:
-			logger.level = 'info';
-			logger.info(message);
-			break;
-	}
+	const logType = type => {
+		var logID = {
+			t: function () {
+				logger.level = 'trace';
+				logger.trace(message);
+			},
+			d: function () {
+				logger.level = 'debug';
+				logger.debug(message);
+			},
+			w: function () {
+				logger.level = 'warn';
+				logger.warn(message);
+			},
+			e: function () {
+				logger.level = 'error';
+				logger.error(message);
+			},
+			f: function () {
+				logger.level = 'fatal';
+				logger.fatal(message);
+			},
+			i: function () {
+				logger.level = 'info';
+				logger.info(message);
+			}
+		};
+		return (logID[type] || logID['i'])();
+	};
+	logType(type);
 };
 
 const waitforKey = async () => {
