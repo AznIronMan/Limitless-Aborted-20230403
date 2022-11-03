@@ -10,45 +10,77 @@ const fullDate = `${justDate}_${hours}${minutes}${seconds}`;
 const filer = require('../tools/filer');
 const log4js = require('log4js');
 const vault = require('../tools/vault');
+const process = require('node:process');
 
 const createLog = () => {
-	vault.logFile = `${fullDate}.log`;
-	filer.createDir(vault.logDir);
-	log4js.configure({
-		appenders: {
-			dateFile: {
-				type: 'dateFile',
-				filename: `${vault.logDir}/${vault.logFile}`,
-				compress: true,
-				layout: { type: 'pattern', pattern: '[%d] [%p] %m' }
+	if (process.env.DEBUG) {
+		log4js.configure({
+			appenders: {
+				out: {
+					type: 'stdout',
+					layout: { type: 'pattern', pattern: '[%d] [%p] %m' }
+				}
+			},
+			categories: {
+				default: { appenders: ['out'], level: 'info' }
 			}
-		},
-		categories: {
-			default: { appenders: ['dateFile'], level: 'info' }
-		}
-	});
+		});
+	} else {
+		vault.logFile = `${fullDate}.log`;
+		filer.createDir(vault.logDir);
+		log4js.configure({
+			appenders: {
+				dateFile: {
+					type: 'dateFile',
+					filename: `${vault.logDir}/${vault.logFile}`,
+					compress: true,
+					layout: { type: 'pattern', pattern: '[%d] [%p] %m' }
+				}
+			},
+			categories: {
+				default: { appenders: ['dateFile'], level: 'info' }
+			}
+		});
+	}
 	const logger = log4js.getLogger();
-	logger.info('Logfile Started...');
+	if (process.env.DEBUG) {
+		logger.warn('DEBUG MODE ON: No LOG FILE CREATED, STDOUT ONLY.');
+	} else {
+		logger.info('Logfile Started...');
+	}
 };
 
 const writeLog = (message, type) => {
 	if (type === undefined) {
 		type = 'x';
 	}
-
-	log4js.configure({
-		appenders: {
-			dateFile: {
-				type: 'dateFile',
-				filename: `${vault.logDir}/${vault.logFile}`,
-				compress: true,
-				layout: { type: 'pattern', pattern: '[%d] [%p] %m' }
+	if (process.env.DEBUG) {
+		log4js.configure({
+			appenders: {
+				out: {
+					type: 'stdout',
+					layout: { type: 'pattern', pattern: '[%d] [%p] %m' }
+				}
+			},
+			categories: {
+				default: { appenders: ['out'], level: 'info' }
 			}
-		},
-		categories: {
-			default: { appenders: ['dateFile'], level: 'info' }
-		}
-	});
+		});
+	} else {
+		log4js.configure({
+			appenders: {
+				dateFile: {
+					type: 'dateFile',
+					filename: `${vault.logDir}/${vault.logFile}`,
+					compress: true,
+					layout: { type: 'pattern', pattern: '[%d] [%p] %m' }
+				}
+			},
+			categories: {
+				default: { appenders: ['dateFile'], level: 'info' }
+			}
+		});
+	}
 	const logger = log4js.getLogger();
 	switch (type) {
 		case 't':

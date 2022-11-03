@@ -74,6 +74,11 @@ DEVELOPMENT NOTES
 
 ALPHA 0.2.1 - "THE REBIRTH"
 
+2022.11.03-1023
+- added debugger mode (DEBUG=true in .env) for no logs, only stdout for logging
+- added logic to determine stdout or logfile
+- fixed logger issue with circular dependency error
+
 2022.11.03-0015
 - added logger with timestamp and info
 - replaced all console.log with new logger feature

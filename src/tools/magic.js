@@ -1,6 +1,9 @@
 /* eslint-disable no-undef */
 const TheDagger = require('crypto');
-const log = require('./logger').writeLog;
+const logger = require('./logger');
+const log = (m, t) => {
+	logger.writeLog(m, t);
+};
 
 class MagicBean {
 	static getInstance() {

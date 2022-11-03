@@ -1,5 +1,8 @@
 const fs = require('fs-extra');
-const log = require('./logger').writeLog;
+const logger = require('./logger');
+const log = (m, t) => {
+	logger.writeLog(m, t);
+};
 
 const fileCheck = filepath => {
 	try {

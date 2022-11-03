@@ -14,24 +14,23 @@ const building = [
 	)}`
 ];
 const process = require('node:process');
-const buildLog = require('../tools/logger').createLog;
-const log = require('../tools/logger').writeLog;
+const logger = require('./logger');
+const log = (m, t) => {
+	logger.writeLog(m, t);
+};
 
 const startupChecks = async () => {
-	buildLog();
 	let env = filer.fileCheck('./.env');
 	const nm = filer.fileCheck('./node_modules');
 	const db = filer.fileCheck('./db');
-	if (await checkEnv(env)) {
-		env = filer.fileCheck('./.env');
-	}
+	env = filer.fileCheck('./.env');
 	require('dotenv').config();
 	const defdb = filer.fileCheck(`./db/${process.env.L_DATABASE}`);
+	logger.createLog();
 	log(`Env File: ${env}`);
 	log(`Modules Folder: ${nm}`);
 	log(`DB Folder: ${db}`);
 	log(`Default DB: ${defdb}`);
-	log(`Env Check #2: ${await buildEnv()}`);
 	//console.log('Query Test', (await dbDel('dbInfo','dbName',`'testing'`)))
 };
 
