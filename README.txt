@@ -72,7 +72,14 @@ DEVELOPMENT NOTES
 
 [CURRENT UPDATE]
 
-ALPHA 0.2.000.0000 - "THE REBIRTH"
+ALPHA 0.2.1 - "THE REBIRTH"
+
+2022.11.02-1956
+- updated versioning from vb.net style to node.js style
+- added eslint and prettier to project
+- added security to private key information
+- secured env creation
+- added magic and vault for future use
 
 2022.10.25-1931
 - added aa-sqlite module

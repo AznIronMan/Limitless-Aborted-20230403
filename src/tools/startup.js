@@ -1,30 +1,29 @@
-const { fileCheck, createTextFile } = require('../tools/filer');
-const {
-	// eslint-disable-next-line no-unused-vars
-	dbGetCol,
-	// eslint-disable-next-line no-unused-vars
-	dbGetRow,
-	// eslint-disable-next-line no-unused-vars
-	dbGetVal,
-	// eslint-disable-next-line no-unused-vars
-	dbUpdate,
-	// eslint-disable-next-line no-unused-vars
-	dbAdd,
-	// eslint-disable-next-line no-unused-vars
-	dbDel
-} = require('../tools/db');
-//const os = require('os');
+/* eslint-disable no-unused-vars */
+const squidInk = require('../tools/vault');
+const db = require('../tools/db');
+const filer = require('../tools/filer');
+const magic = require('../tools/magic');
+const dagger = magic.toLight(squidInk.magicWand[0], squidInk.magicWand[1]);
+const os = require('os');
+const building = [
+	`${magic.toLight(dagger, squidInk.theCastle[0])}`,
+	`${magic.toLight(dagger, squidInk.theCastle[1])}`,
+	`${magic.toLight(dagger, squidInk.theCastle[2])}${os.EOL}${magic.toLight(
+		dagger,
+		squidInk.theCastle[3]
+	)}`
+];
+const process = require('node:process');
 
 const startupChecks = async () => {
-	let env = fileCheck('./.env');
-	const nm = fileCheck('./node_modules');
-	const db = fileCheck('./db');
+	let env = filer.fileCheck('./.env');
+	const nm = filer.fileCheck('./node_modules');
+	const db = filer.fileCheck('./db');
 	if (await checkEnv(env)) {
-		env = fileCheck('./.env');
+		env = filer.fileCheck('./.env');
 	}
 	require('dotenv').config();
-	// eslint-disable-next-line no-undef
-	const defdb = fileCheck(`./db/${process.env.L_DATABASE}`);
+	const defdb = filer.fileCheck(`./db/${process.env.L_DATABASE}`);
 	console.log('Env:', env);
 	console.log('Modules', nm);
 	console.log('DB Folder', db);
@@ -45,11 +44,7 @@ const checkEnv = async status => {
 };
 
 const buildEnv = async () => {
-	return createTextFile(
-		'./',
-		'.env',
-		`L_DBFOLDER="./db/"\nL_DATABASE="default.limit"`
-	);
+	return filer.createTextFile(building[0], building[1], building[2]);
 };
 
 module.exports = {
