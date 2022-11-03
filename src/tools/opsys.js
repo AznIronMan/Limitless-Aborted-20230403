@@ -11,7 +11,7 @@ const getOS = async () => {
 			return `${linuxInfo.NAME} ${linuxInfo.VERSION} ${
 				linuxInfo.ID_LIKE
 			} ${os.machine()}`;
-		case 'windows': //windows
+		case 'win32': //windows
 			return `${os.version()} ${os.release} ${os.machine()}`;
 		case 'darwin':
 			return `MacOS ${os.release()}`;
