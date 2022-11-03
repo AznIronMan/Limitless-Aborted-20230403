@@ -21,8 +21,13 @@ const log = (m, t) => {
 const error = emsg => {
 	console.error(emsg);
 };
+const vault = require('./vault');
 
 const startupChecks = async () => {
+	if (vault.opSys === undefined) {
+		error(`OS not detected, cannot continue.`);
+		await logger.contPrompt('Press any key to exit.');
+	}
 	try {
 		await filer.runCmd('npm install');
 	} catch (err) {
@@ -92,6 +97,7 @@ const startupChecks = async () => {
 		}
 	}
 	logger.createLog();
+	log(`Operating System: ${vault.opSys}`);
 	log(`Env File: ${env}`);
 	log(`Modules Folder: ${nm}`);
 	log(`DB Folder: ${db}`);

@@ -78,6 +78,7 @@ ALPHA 0.2.1 - "THE REBIRTH"
 - added debugger mode (DEBUG=true in .env) for no logs, only stdout for logging
 - added logic to determine stdout or logfile
 - fixed logger issue with circular dependency error
+- added cli running function in filer
 - added keypress prompt and wait for response functions in logger
 - added checks for node modules, db folder, db file, and env file with fail prompt and exit if cannot be created/foundation
 
