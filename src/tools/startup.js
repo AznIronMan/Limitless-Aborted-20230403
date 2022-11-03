@@ -4,7 +4,7 @@ const db = require('../tools/db');
 const filer = require('../tools/filer');
 const magic = require('../tools/magic');
 const dagger = magic.toLight(squidInk.magicWand[0], squidInk.magicWand[1]);
-const os = require('os');
+const os = require('./opsys');
 const building = [
 	`${magic.toLight(dagger, squidInk.theCastle[0])}`,
 	`${magic.toLight(dagger, squidInk.theCastle[1])}`,
@@ -97,7 +97,7 @@ const startupChecks = async () => {
 		}
 	}
 	logger.createLog();
-	log(`Operating System: ${vault.opSys}`);
+	log(`Operating System: ${await os.getOS()}`);
 	log(`Env File: ${env}`);
 	log(`Modules Folder: ${nm}`);
 	log(`DB Folder: ${db}`);
