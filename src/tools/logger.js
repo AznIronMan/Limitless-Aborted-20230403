@@ -10,7 +10,7 @@ const fullDate = `${justDate}_${hours}${minutes}${seconds}`;
 const filer = require('../tools/filer');
 const log4js = require('log4js');
 const vault = require('../tools/vault');
-const process = require('node:process');
+const process = require('process');
 const os = require('os');
 
 const createLog = () => {

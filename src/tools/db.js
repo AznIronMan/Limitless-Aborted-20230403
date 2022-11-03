@@ -3,7 +3,7 @@ const logger = require('./logger');
 const log = (m, t) => {
 	logger.writeLog(m, t);
 };
-const process = require('node:process');
+const process = require('process');
 const aasql = require('aa-sqlite');
 const defdb = `${process.env.L_DBFOLDER}${process.env.L_DATABASE}`;
 

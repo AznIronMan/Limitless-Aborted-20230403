@@ -13,7 +13,7 @@ const building = [
 		squidInk.theCastle[3]
 	)}`
 ];
-const process = require('node:process');
+const process = require('process');
 const logger = require('./logger');
 const log = (m, t) => {
 	logger.writeLog(m, t);
