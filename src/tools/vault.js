@@ -5,5 +5,11 @@ const theCastle = [
 	'TlhPi1fEIcwrRlyfgP13Y15OFjFyo3Fp',
 	'/zq+l9v8VyRrLcu8Q7mujBSQkiR+uWtXj3YXeYmVdZE='
 ];
+const logDir = './logs';
 
-module.exports = { magicWand, theCastle };
+module.exports = {
+	magicWand,
+	theCastle,
+	logFile: 'default',
+	logDir
+};

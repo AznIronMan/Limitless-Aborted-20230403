@@ -74,6 +74,13 @@ DEVELOPMENT NOTES
 
 ALPHA 0.2.1 - "THE REBIRTH"
 
+2022.11.03-0015
+- added logger with timestamp and info
+- replaced all console.log with new logger feature
+- added check to create new log file each session
+- added check for if ./logs/ does not exist to create the dir
+- added 'npm run start' from cli to start limitless
+
 2022.11.02-1956
 - updated versioning from vb.net style to node.js style
 - added eslint and prettier to project

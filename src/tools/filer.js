@@ -1,4 +1,5 @@
 const fs = require('fs-extra');
+const log = require('./logger').writeLog;
 
 const fileCheck = filepath => {
 	try {
@@ -8,7 +9,8 @@ const fileCheck = filepath => {
 			return Boolean(false);
 		}
 	} catch (err) {
-		console.error(err);
+		log(`[fileCheck] Args: ${filepath}`, 'd');
+		log(`[fileCheck] ${err}`, 'e');
 	}
 };
 
@@ -17,12 +19,20 @@ const createTextFile = (filepath, filename, text) => {
 		fs.outputFileSync(`${filepath}/${filename}`, text);
 		return Boolean(true);
 	} catch (err) {
-		console.error(err);
+		log(`[createTextFile] Args: ${filepath}-${filename}-${text}`, 'd');
+		log(`[createTextFile] ${err}`, 'e');
 		return Boolean(false);
+	}
+};
+
+const createDir = path => {
+	if (!fs.existsSync(path)) {
+		fs.mkdirSync(path);
 	}
 };
 
 module.exports = {
 	fileCheck,
-	createTextFile
+	createTextFile,
+	createDir
 };

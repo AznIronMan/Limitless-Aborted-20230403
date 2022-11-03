@@ -1,7 +1,7 @@
-const { startupChecks } = require('./tools/startup');
+const startup = require('./tools/startup');
 
 async function main() {
-	await startupChecks();
+	await startup.startupChecks();
 }
 
 main();

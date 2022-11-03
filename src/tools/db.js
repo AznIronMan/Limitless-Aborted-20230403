@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
+const log = require('./logger').writeLog;
 const process = require('node:process');
 const aasql = require('aa-sqlite');
-//const sql3 = require('sqlite3').verbose();
 const defdb = `${process.env.L_DBFOLDER}${process.env.L_DATABASE}`;
 
 const dbOpen = async db => {
@@ -69,7 +70,6 @@ const dbAdd = async (tbl, vals) => {
 	let query = `INSERT INTO ${tbl} VALUES (${vals})`;
 
 	const answer = (await aasql.push(query)).message;
-	console.log(answer);
 	dbClose();
 	return answer === 'Succeeded'; // returns a true or false boolean
 };
@@ -77,9 +77,7 @@ const dbAdd = async (tbl, vals) => {
 const dbDel = async (tbl, tCol, tVal) => {
 	dbOpen();
 	let query = `DELETE FROM ${tbl} WHERE ${tCol} = ${tVal}`;
-	console.log(query);
 	const answer = (await aasql.push(query)).message;
-	console.log(answer);
 	return answer === 'Succeeded'; // returns a true or false boolean
 };
 

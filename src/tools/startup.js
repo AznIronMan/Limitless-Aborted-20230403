@@ -14,8 +14,11 @@ const building = [
 	)}`
 ];
 const process = require('node:process');
+const buildLog = require('../tools/logger').createLog;
+const log = require('../tools/logger').writeLog;
 
 const startupChecks = async () => {
+	buildLog();
 	let env = filer.fileCheck('./.env');
 	const nm = filer.fileCheck('./node_modules');
 	const db = filer.fileCheck('./db');
@@ -24,21 +27,21 @@ const startupChecks = async () => {
 	}
 	require('dotenv').config();
 	const defdb = filer.fileCheck(`./db/${process.env.L_DATABASE}`);
-	console.log('Env:', env);
-	console.log('Modules', nm);
-	console.log('DB Folder', db);
-	console.log('Default DB', defdb);
-	console.log(await buildEnv());
+	log(`Env File: ${env}`);
+	log(`Modules Folder: ${nm}`);
+	log(`DB Folder: ${db}`);
+	log(`Default DB: ${defdb}`);
+	log(`Env Check #2: ${await buildEnv()}`);
 	//console.log('Query Test', (await dbDel('dbInfo','dbName',`'testing'`)))
 };
 
 const checkEnv = async status => {
 	if (!status) {
-		console.log('Found .env: ', status);
-		console.log(`Building .env:`, await buildEnv());
+		log(`[checkEnv] Found .env: ${status}`, 'w');
+		log(`[checkEnv] Building .env: ${await buildEnv()}`);
 		return Boolean(true);
 	} else {
-		console.log('Found .env: ', status);
+		log(`[checkEnv] Found .env: ${status}`);
 		return Boolean(false);
 	}
 };

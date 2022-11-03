@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 const TheDagger = require('crypto');
+const log = require('./logger').writeLog;
 
 class MagicBean {
 	static getInstance() {
@@ -9,11 +10,11 @@ class MagicBean {
 
 class AllMagic {
 	toDark() {
-		throw new Error('All magic comes with a price...');
+		throw new Error('[toDark] All magic comes with a price...');
 	}
 
 	toLight() {
-		throw new Error('All magic comes with a price...');
+		throw new Error('[toLight] All magic comes with a price...');
 	}
 }
 
@@ -44,6 +45,8 @@ class ThePrice extends AllMagic {
 				theDagger.final('base64')
 			);
 		} catch (err) {
+			log(`[toDark] Args: ${TheSavior}`, 'd');
+			log(`[toDark] ${err}`, 'e');
 			throw new Error(err);
 		}
 	}
@@ -76,6 +79,8 @@ class ThePrice extends AllMagic {
 				theDagger.final('utf8')
 			);
 		} catch (err) {
+			log(`[toLight] Args: ${TheDarkOne}`, 'd');
+			log(`[toLight] ${err}`, 'e');
 			throw new Error(err);
 		}
 	}
