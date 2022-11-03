@@ -7,7 +7,7 @@ const theCastle = [
 	'/zq+l9v8VyRrLcu8Q7mujBSQkiR+uWtXj3YXeYmVdZE='
 ];
 const logDir = './logs';
-const opSys = process.platform();
+const opSys = process.platform;
 
 module.exports = {
 	magicWand,
