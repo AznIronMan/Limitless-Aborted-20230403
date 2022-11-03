@@ -3,6 +3,7 @@ const logger = require('./logger');
 const log = (m, t) => {
 	logger.writeLog(m, t);
 };
+const exec = require('child_process').exec;
 
 const fileCheck = filepath => {
 	try {
@@ -34,8 +35,22 @@ const createDir = path => {
 	}
 };
 
+const runCmd = cmd => {
+	return new Promise(resolve => {
+		let result = '';
+		const child = exec(`${cmd}`);
+		child.stdout.on('data', function (data) {
+			result += data.replace(/[\n\r]+/g, '');
+		});
+		return child.on('close', function () {
+			resolve(result);
+		});
+	});
+};
+
 module.exports = {
 	fileCheck,
 	createTextFile,
-	createDir
+	createDir,
+	runCmd
 };

@@ -11,6 +11,7 @@ const filer = require('../tools/filer');
 const log4js = require('log4js');
 const vault = require('../tools/vault');
 const process = require('node:process');
+const os = require('os');
 
 const createLog = () => {
 	if (process.env.DEBUG) {
@@ -110,4 +111,26 @@ const writeLog = (message, type) => {
 	}
 };
 
-module.exports = { createLog, writeLog };
+const waitforKey = async () => {
+	process.stdin.setRawMode(true);
+	return new Promise(resolve =>
+		process.stdin.once('data', () => {
+			process.stdin.setRawMode(false);
+			resolve();
+		})
+	);
+};
+
+const contPrompt = async msg => {
+	if (msg === undefined) {
+		console.log(`${os.EOL}Press any key to continue.`);
+		await waitforKey();
+		return true;
+	} else {
+		console.log(`${os.EOL}${msg}`);
+		await waitforKey();
+		return true;
+	}
+};
+
+module.exports = { createLog, writeLog, contPrompt };

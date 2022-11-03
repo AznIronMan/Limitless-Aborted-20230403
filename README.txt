@@ -74,10 +74,12 @@ DEVELOPMENT NOTES
 
 ALPHA 0.2.1 - "THE REBIRTH"
 
-2022.11.03-1023
+2022.11.03-1100
 - added debugger mode (DEBUG=true in .env) for no logs, only stdout for logging
 - added logic to determine stdout or logfile
 - fixed logger issue with circular dependency error
+- added keypress prompt and wait for response functions in logger
+- added checks for node modules, db folder, db file, and env file with fail prompt and exit if cannot be created/foundation
 
 2022.11.03-0015
 - added logger with timestamp and info

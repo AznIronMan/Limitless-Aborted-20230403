@@ -18,14 +18,79 @@ const logger = require('./logger');
 const log = (m, t) => {
 	logger.writeLog(m, t);
 };
+const error = emsg => {
+	console.error(emsg);
+};
 
 const startupChecks = async () => {
-	let env = filer.fileCheck('./.env');
+	try {
+		await filer.runCmd('npm install');
+	} catch (err) {
+		error(`NPM ERROR: could not run 'npm install'. `, err);
+	}
 	const nm = filer.fileCheck('./node_modules');
+	if (!nm) {
+		try {
+			await filer.runCmd('npm install');
+		} catch (err) {
+			error(
+				`FATAL ERROR: could not find or build ./node_modules.  ` +
+					`Please run manually from root of Limitless folder. `,
+				err
+			);
+			if (await logger.contPrompt('Press any key to exit.')) {
+				process.exit(1);
+			}
+		}
+	}
+	let env = filer.fileCheck('./.env');
+	if (!env) {
+		env = await checkEnv(env);
+	}
 	const db = filer.fileCheck('./db');
+	if (!db) {
+		try {
+			filer.createDir('./db');
+		} catch (err) {
+			error(
+				`FATAL ERROR: could not find or create ./db.  Cannot continue. `,
+				err
+			);
+			if (await logger.contPrompt('Press any key to exit.')) {
+				process.exit(1);
+			}
+		}
+	}
 	env = filer.fileCheck('./.env');
+	if (!env) {
+		try {
+			await buildEnv();
+		} catch (err) {
+			error(
+				`FATAL ERROR: could not find or create .env file.  Cannot continue. `,
+				err
+			);
+			if (await logger.contPrompt('Press any key to exit.')) {
+				process.exit(1);
+			}
+		}
+	}
 	require('dotenv').config();
 	const defdb = filer.fileCheck(`./db/${process.env.L_DATABASE}`);
+	if (!defdb) {
+		try {
+			//TO DO: attempt to build/copy db - will throw error for now;
+			throw error; //TO DO: delete this once build/copy db above is built
+		} catch (err) {
+			error(
+				`FATAL ERROR: could not find or create default database file.  Cannot continue. `,
+				err
+			);
+			if (await logger.contPrompt('Press any key to exit.')) {
+				process.exit(1);
+			}
+		}
+	}
 	logger.createLog();
 	log(`Env File: ${env}`);
 	log(`Modules Folder: ${nm}`);
