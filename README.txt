@@ -18,7 +18,7 @@ JOIN THE COMMUNITY ON FACEBOOK OR DISCORD
 
 This game is written in Node.js and should
 work on any operating system that supports
-Node.js.
+Node.js v19.0.0 or higher.
 
 https://nodejs.org/en/download/
 
@@ -74,10 +74,12 @@ DEVELOPMENT NOTES
 
 ALPHA 0.2.1 - "THE REBIRTH"
 
-2022.11.04-1239
+2022.11.04-1248
 - removed debug from env and switched to a simplier way to detect the debug mode (for dev only)
 - simplified the error exit if the initial checks fail
 - reordered some of the startup checks for better efficiency
+- added node version requirement to readme
+- added section comments in startup
 
 2022.11.03-2217
 - added logger with timestamp and info

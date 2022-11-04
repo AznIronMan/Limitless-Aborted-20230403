@@ -21,13 +21,17 @@ const envF = vault.envFile.replace('./', '');
 const pressanyKey = `There was an error, please check the logs.  Press any key to exit.`;
 
 const startupChecks = async () => {
+	//debug check
 	vault.debug = filer.fileCheck(magic.toLight(dagger, squidInk.magicWand[1]));
+	//start logger
 	logger.createLog();
+	//os check
 	log(`Operating System: ${await os.getOS()}`);
 	if (vault.opSys === undefined) {
 		log(`OS not detected, cannot continue.`, 'f');
 		errorExit();
 	}
+	//node modules check
 	try {
 		await filer.runCmd('npm install');
 	} catch (err) {
@@ -47,7 +51,8 @@ const startupChecks = async () => {
 			errorExit();
 		}
 	}
-
+	log(`Modules Folder: ${nm}`);
+	//env detect
 	let env = filer.fileCheck(vault.envFile);
 	if (!env) {
 		try {
@@ -62,13 +67,13 @@ const startupChecks = async () => {
 		}
 	}
 	env = filer.fileCheck(vault.envFile);
+	log(`Env File: ${env}`);
+	//database check
 	require('dotenv').config();
 	let db = filer.fileCheck(vault.dbDir);
 	if (!db) {
 		db = await buildDir(vault.dbDir);
 	}
-	log(`Env File: ${env}`);
-	log(`Modules Folder: ${nm}`);
 	const fulldbpath = `${vault.dbDir}/${process.env.L_DATABASE}`;
 	let defdb = filer.fileCheck(fulldbpath);
 	if (!defdb) {
@@ -93,6 +98,7 @@ const startupChecks = async () => {
 	}
 	log(`DB Folder: ${db}`);
 	log(`Default DB: ${defdb}`);
+	//game folders check
 	let sav = filer.fileCheck(vault.savDir);
 	if (!sav) {
 		sav = await buildDir(vault.savDir);
