@@ -103,12 +103,12 @@ dist
 # TernJS port file
 .tern-port
 
-#commit.sh file
-commit.sh 
-
-#local .sh files
+#local dev files
+commit.sh
 d.sh
 e.sh
+sync.bat
+private/
 
 #hide game folders
 avatars/
