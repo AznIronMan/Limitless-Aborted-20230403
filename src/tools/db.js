@@ -5,7 +5,7 @@ const log = (m, t) => {
 };
 const prison = require('./vault');
 const magic = require('./magic');
-const dagger = magic.toLight(prison.magicWand[0], prison.magicWand[1]);
+const dagger = magic.toLight(prison.magicWand[2], prison.magicWand[3]);
 const process = require('process');
 const aasql = require('aa-sqlite');
 const defdb = `${process.env.L_DBFOLDER}${process.env.L_DATABASE}`;

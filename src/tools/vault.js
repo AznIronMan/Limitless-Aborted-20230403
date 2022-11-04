@@ -1,5 +1,10 @@
 //limitless info
-const magicWand = ['TryAgainDearie', 'DgLYSQq6iolSWAfjgR8R4wgbbY5zy6XE'];
+const magicWand = [
+	'WhatchaGonnaDo',
+	'ZhsQ9BJBpRblCgrV1WKIuA==',
+	'TryAgainDearie',
+	'DgLYSQq6iolSWAfjgR8R4wgbbY5zy6XE'
+];
 const theCastle = [
 	'h3rvTyor0KM=',
 	'wabilBZBsos=',
@@ -31,6 +36,7 @@ module.exports = {
 	theCastle,
 	skysTheLimit,
 	logFile: 'default',
+	debug: false,
 	opSys,
 	envFile,
 	avaDir,

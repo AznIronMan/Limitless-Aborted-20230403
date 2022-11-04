@@ -104,6 +104,7 @@ dist
 .tern-port
 
 #local dev files
+.debug
 commit.sh
 d.sh
 e.sh

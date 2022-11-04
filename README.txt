@@ -74,6 +74,11 @@ DEVELOPMENT NOTES
 
 ALPHA 0.2.1 - "THE REBIRTH"
 
+2022.11.04-1239
+- removed debug from env and switched to a simplier way to detect the debug mode (for dev only)
+- simplified the error exit if the initial checks fail
+- reordered some of the startup checks for better efficiency
+
 2022.11.03-2217
 - added logger with timestamp and info
 - replaced all console.log with new logger feature

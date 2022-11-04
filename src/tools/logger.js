@@ -14,7 +14,7 @@ const process = require('process');
 const os = require('os');
 
 const createLog = () => {
-	if (process.env.DEBUG) {
+	if (vault.debug) {
 		log4js.configure({
 			appenders: {
 				out: {
@@ -44,7 +44,7 @@ const createLog = () => {
 		});
 	}
 	const logger = log4js.getLogger();
-	if (process.env.DEBUG) {
+	if (vault.debug) {
 		logger.warn('DEBUG MODE ON: No LOG FILE CREATED, STDOUT ONLY.');
 	} else {
 		logger.info('Logfile Started...');
@@ -55,7 +55,7 @@ const writeLog = (message, type) => {
 	if (type === undefined) {
 		type = 'x';
 	}
-	if (process.env.DEBUG) {
+	if (vault.debug) {
 		log4js.configure({
 			appenders: {
 				out: {
