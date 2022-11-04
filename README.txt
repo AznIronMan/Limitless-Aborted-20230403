@@ -1,7 +1,7 @@
 =============================================
 LIMITLESS by Geoff Clark
 PUBLISHED by CLARKTRIBEGAMES LLC
-VERSION ALPHA 0.2.000.0000
+VERSION ALPHA 0.2.1
 =============================================
 
 SUPPORT THE DEVELOPMENT OF THIS GAME @ 
@@ -74,7 +74,7 @@ DEVELOPMENT NOTES
 
 ALPHA 0.2.1 - "THE REBIRTH"
 
-2022.11.03-1612
+2022.11.03-1754
 - added logger with timestamp and info
 - replaced all console.log with new logger feature
 - added check to create new log file each session
@@ -89,6 +89,7 @@ ALPHA 0.2.1 - "THE REBIRTH"
 - added os detection for multi platform support (windows, macos, and linux at this time)
 - swapped out switch case for object literals in logger
 - added ctg cloud db reader
+- added url downloader to filer
 - added default db download from ctg cloud if no db is found
 
 2022.11.02-1956
@@ -99,15 +100,13 @@ ALPHA 0.2.1 - "THE REBIRTH"
 - added magic and vault for future use
 
 2022.10.25-1931
+- removed sqlite for sqlite3 and nw-gyp
+- created db functions with dbUpdate, dbGetVal, dbGetCol, dbGetRow for db queries
+- added default db name for env
 - added aa-sqlite module
 - revamp db with aa-sqlite queries and removed the sqlite3 queries
 - added db folder to env
 - added dbAdd and dbDel to db queries
-
-2022.10.25-1139
-- removed sqlite for sqlite3 and nw-gyp
-- created db functions with dbUpdate, dbGetVal, dbGetCol, dbGetRow for db queries
-- added default db name for env
 
 2022.10.24-2026
 - node.js foundation established 
