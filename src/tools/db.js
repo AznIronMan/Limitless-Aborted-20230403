@@ -8,7 +8,8 @@ const magic = require('./magic');
 const dagger = magic.toLight(prison.magicWand[2], prison.magicWand[3]);
 const process = require('process');
 const aasql = require('aa-sqlite');
-const defdb = `${process.env.L_DBFOLDER}${process.env.L_DATABASE}`;
+require('dotenv').config();
+const defdb = `${prison.dbDir}/${process.env.L_DATABASE}`;
 const cloud = require('mysql');
 const biggie112 = prison.skysTheLimit;
 const faithEvans = String.fromCharCode(32);
@@ -93,23 +94,53 @@ const dbDel = async (tbl, tCol, tVal) => {
 	return answer === 'Succeeded'; // returns a true or false boolean
 };
 
+const cloudStare = () => {
+	{
+		return new Promise((res, rej) => {
+			try {
+				res(
+					getCloud(
+						String(singIt(biggie112[7])).replaceAll(
+							singIt(biggie112[6]),
+							faithEvans
+						),
+						0,
+						String(singIt(biggie112[8]))
+					)
+				);
+			} catch (err) {
+				log(
+					`Error retrieving ${singIt(
+						biggie112[8]
+					)} from the heavens.  ${err}`,
+					'e'
+				);
+				rej(undefined);
+			}
+		});
+	}
+};
+
 const flyHigh = () => {
 	return new Promise((res, rej) => {
 		try {
 			res(
 				getCloud(
-					String(
-						singIt(
-							`2AsuAKlO9vlTNDpUiY2KOrjUdtDDBWT4GJhXp5O32n3HK9S` +
-								`CNANb7U6Qwq2ik43IKIDt6Arj7vgBmnvtnSiMIg==`
-						)
-					).replaceAll(singIt(`j+du0ipIEGw=`), faithEvans),
+					String(singIt(biggie112[4] + biggie112[5])).replaceAll(
+						singIt(biggie112[6]),
+						faithEvans
+					),
 					0,
-					'url'
+					String(singIt(biggie112[9]))
 				)
 			);
 		} catch (err) {
-			log(`Error downloading from URL.  ${err}`, 'e');
+			log(
+				`Error downloading from ${
+					singIt(biggie112[9]).toUpperCase
+				}.  ${err}`,
+				'e'
+			);
 			rej(undefined);
 		}
 	});
@@ -137,6 +168,7 @@ const getCloud = async (pilot, terminal, gate) => {
 
 module.exports = {
 	flyHigh,
+	cloudStare,
 	dbGetVal,
 	dbGetCol,
 	dbGetRow,

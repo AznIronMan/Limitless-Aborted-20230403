@@ -15,6 +15,7 @@ const logger = require('./logger');
 const log = (m, t) => {
 	logger.writeLog(m, t);
 };
+const tbox = require('./toolbox');
 
 const vault = require('./vault');
 const envF = vault.envFile.replace('./', '');
@@ -98,6 +99,8 @@ const startupChecks = async () => {
 	}
 	log(`DB Folder: ${db}`);
 	log(`Default DB: ${defdb}`);
+	//database version check
+	await dbVerCheck();
 	//game folders check
 	let sav = filer.fileCheck(vault.savDir);
 	if (!sav) {
@@ -138,6 +141,23 @@ const buildEnv = async () => {
 	log(`Missing ${envF}: ${true}`, 'w');
 	log(`Creating Fresh ${envF} file.`);
 	return filer.createTextFile(building[0], building[1], building[2]);
+};
+
+const dbVerCheck = async () => {
+	const sDB = await data.dbGetVal(
+		'dbVersion',
+		'dbInfo',
+		'dbName',
+		tbox.cap1st(process.env.L_DATABASE.replace(vault.saveExt, ''))
+	);
+	const tDB = await data.cloudStare();
+	log(`Loaded DB '${process.env.L_DATABASE}' Version: ${sDB}`);
+	log(`Cloud DB Current Version: ${tDB}`);
+	const response = tbox.verCompare(tDB, sDB, process.env.L_DATABASE);
+	if (response[3] === 'f') errorExit();
+	log(response[0], response[3]);
+	if (response[1].length > 1) log(response[1], response[3]);
+	if (response[2].length > 1) log(response[2], response[3]);
 };
 
 const errorExit = async () => {
