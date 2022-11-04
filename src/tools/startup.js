@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const squidInk = require('../tools/vault');
 const data = require('../tools/db');
 const filer = require('../tools/filer');
@@ -8,10 +7,8 @@ const os = require('./opsys');
 const building = [
 	`${magic.toLight(dagger, squidInk.theCastle[0])}`,
 	`${magic.toLight(dagger, squidInk.theCastle[1])}`,
-	`${magic.toLight(dagger, squidInk.theCastle[2])}${os.EOL}${magic.toLight(
-		dagger,
-		squidInk.theCastle[3]
-	)}`
+	`${magic.toLight(dagger, squidInk.theCastle[2]).replace('.', ' ')}` +
+		`\n${magic.toLight(dagger, squidInk.theCastle[3])}`
 ];
 const process = require('process');
 const logger = require('./logger');
@@ -22,71 +19,61 @@ const error = emsg => {
 	console.error(emsg);
 };
 const vault = require('./vault');
+const envF = vault.envFile.replace('./', '');
+const pressanyKey = `Press any key to exit.`;
 
 const startupChecks = async () => {
 	if (vault.opSys === undefined) {
 		error(`OS not detected, cannot continue.`);
-		await logger.contPrompt('Press any key to exit.');
+		await logger.contPrompt(pressanyKey);
 	}
 	try {
 		await filer.runCmd('npm install');
 	} catch (err) {
 		error(`NPM ERROR: could not run 'npm install'. `, err);
 	}
-	const nm = filer.fileCheck('./node_modules');
+	const nm = filer.fileCheck(vault.nmDir);
 	if (!nm) {
 		try {
 			await filer.runCmd('npm install');
 		} catch (err) {
 			error(
-				`FATAL ERROR: could not find or build ./node_modules.  ` +
+				`FATAL ERROR: could not find or build ${vault.nmDir}.  ` +
 					`Please run manually from root of Limitless folder. `,
 				err
 			);
-			if (await logger.contPrompt('Press any key to exit.')) {
+			if (await logger.contPrompt(pressanyKey)) {
 				process.exit(1);
 			}
 		}
 	}
-	let env = filer.fileCheck('./.env');
-	if (!env) {
-		env = await checkEnv(env);
-	}
-	let db = filer.fileCheck('./db');
-	if (!db) {
-		try {
-			filer.createDir('./db');
-		} catch (err) {
-			error(
-				`FATAL ERROR: could not find or create ./db.  Cannot continue. `,
-				err
-			);
-			if (await logger.contPrompt('Press any key to exit.')) {
-				process.exit(1);
-			}
-		}
-	}
-	env = filer.fileCheck('./.env');
+	logger.createLog();
+	log(`Operating System: ${await os.getOS()}`);
+	let env = filer.fileCheck(vault.envFile);
 	if (!env) {
 		try {
 			await buildEnv();
+			env = true;
 		} catch (err) {
-			error(
-				`FATAL ERROR: could not find or create .env file.  Cannot continue. `,
-				err
+			log(
+				`Could not find or create ${envF} file.  Cannot continue. ${err}`,
+				'f'
 			);
-			if (await logger.contPrompt('Press any key to exit.')) {
+			if (await logger.contPrompt(pressanyKey)) {
 				process.exit(1);
 			}
 		}
 	}
+	env = filer.fileCheck(vault.envFile);
 	require('dotenv').config();
-	const fulldbpath = `${process.env.L_DBFOLDER}${process.env.L_DATABASE}`;
-	let defdb = filer.fileCheck(fulldbpath);
-	logger.createLog();
-	log(`Operating System: ${await os.getOS()}`);
+	let db = filer.fileCheck(vault.dbDir);
+	if (!db) {
+		db = await buildDir(vault.dbDir);
+	}
 	log(`Env File: ${env}`);
 	log(`Modules Folder: ${nm}`);
+	const fulldbpath = `${vault.dbDir}/${process.env.L_DATABASE}`;
+	let defdb = filer.fileCheck(fulldbpath);
 	if (!defdb) {
 		try {
 			const dbURL = await data.flyHigh();
@@ -101,7 +88,7 @@ const startupChecks = async () => {
 				`FATAL ERROR: could not find or create default database file.  Cannot continue. `,
 				err
 			);
-			if (await logger.contPrompt('Press any key to exit.')) {
+			if (await logger.contPrompt(pressanyKey)) {
 				process.exit(1);
 			}
 		}
@@ -110,21 +97,46 @@ const startupChecks = async () => {
 	}
 	log(`DB Folder: ${db}`);
 	log(`Default DB: ${defdb}`);
-	//console.log('Query Test', (await dbDel('dbInfo','dbName',`'testing'`)))
+	let sav = filer.fileCheck(vault.savDir);
+	if (!sav) {
+		sav = await buildDir(vault.savDir);
+	}
+	let ava = filer.fileCheck(vault.avaDir);
+	if (!ava) {
+		ava = await buildDir(vault.avaDir);
+	}
+	let msc = filer.fileCheck(vault.mscDir);
+	if (!msc) {
+		msc = await buildDir(vault.mscDir);
+	}
+	let snd = filer.fileCheck(vault.sndDir);
+	if (!snd) {
+		snd = await buildDir(vault.sndDir);
+	}
+	log(`Saves Folder: ${sav}`);
+	log(`Avatar Folder: ${ava}`);
+	log(`Music Folder: ${msc}`);
+	log(`Sound Folder: ${snd}`);
 };
 
-const checkEnv = async status => {
-	if (!status) {
-		log(`[checkEnv] Found .env: ${status}`, 'w');
-		log(`[checkEnv] Building .env: ${await buildEnv()}`);
+const buildDir = async dir => {
+	try {
+		filer.createDir(dir);
 		return Boolean(true);
-	} else {
-		log(`[checkEnv] Found .env: ${status}`);
-		return Boolean(false);
+	} catch (err) {
+		error(
+			`FATAL ERROR: could not find or create ${dir}.  Cannot continue. `,
+			err
+		);
+		if (await logger.contPrompt(pressanyKey)) {
+			process.exit(1);
+		}
 	}
 };
 
 const buildEnv = async () => {
+	log(`Missing ${envF}: ${true}`, 'w');
+	log(`Creating Fresh ${envF} file.`);
 	return filer.createTextFile(building[0], building[1], building[2]);
 };
 

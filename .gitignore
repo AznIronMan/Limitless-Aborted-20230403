@@ -110,5 +110,10 @@ commit.sh
 d.sh
 e.sh
 
-#hide db folder for now
-db
+#hide game folders
+avatars/
+data/
+logs/
+music/
+saves/
+sound/

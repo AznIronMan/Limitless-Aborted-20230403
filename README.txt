@@ -74,7 +74,7 @@ DEVELOPMENT NOTES
 
 ALPHA 0.2.1 - "THE REBIRTH"
 
-2022.11.03-2014
+2022.11.03-2217
 - added logger with timestamp and info
 - replaced all console.log with new logger feature
 - added check to create new log file each session
@@ -91,6 +91,12 @@ ALPHA 0.2.1 - "THE REBIRTH"
 - added ctg cloud db reader
 - added url downloader to filer
 - added default db download from ctg cloud if no db is found
+- added find and create if not found - avatars, music, saves, and sound folders
+- renamed db folder to data
+- removed dbDir from env file and made it a const in the vault
+- fixed an error in the checkEnv logic
+- added header to env file
+- added headers to the sections in the vault file
 
 2022.11.02-1956
 - updated versioning from vb.net style to node.js style
