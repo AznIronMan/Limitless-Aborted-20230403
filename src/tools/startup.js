@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 const squidInk = require('../tools/vault');
-const db = require('../tools/db');
+const data = require('../tools/db');
 const filer = require('../tools/filer');
 const magic = require('../tools/magic');
 const dagger = magic.toLight(squidInk.magicWand[0], squidInk.magicWand[1]);
@@ -52,7 +52,7 @@ const startupChecks = async () => {
 	if (!env) {
 		env = await checkEnv(env);
 	}
-	const db = filer.fileCheck('./db');
+	let db = filer.fileCheck('./db');
 	if (!db) {
 		try {
 			filer.createDir('./db');
@@ -81,11 +81,21 @@ const startupChecks = async () => {
 		}
 	}
 	require('dotenv').config();
-	const defdb = filer.fileCheck(`./db/${process.env.L_DATABASE}`);
+	const fulldbpath = `${process.env.L_DBFOLDER}${process.env.L_DATABASE}`;
+	let defdb = filer.fileCheck(fulldbpath);
+	logger.createLog();
+	log(`Operating System: ${await os.getOS()}`);
+	log(`Env File: ${env}`);
+	log(`Modules Folder: ${nm}`);
 	if (!defdb) {
 		try {
-			//TO DO: attempt to build/copy db - will throw error for now;
-			throw error; //TO DO: delete this once build/copy db above is built
+			const dbURL = await data.cloudDBOpen();
+			log(
+				`Download Default DB: ${await filer.downloadFile(
+					dbURL,
+					fulldbpath
+				)}`
+			);
 		} catch (err) {
 			error(
 				`FATAL ERROR: could not find or create default database file.  Cannot continue. `,
@@ -95,11 +105,9 @@ const startupChecks = async () => {
 				process.exit(1);
 			}
 		}
+		db = true;
+		defdb = true;
 	}
-	logger.createLog();
-	log(`Operating System: ${await os.getOS()}`);
-	log(`Env File: ${env}`);
-	log(`Modules Folder: ${nm}`);
 	log(`DB Folder: ${db}`);
 	log(`Default DB: ${defdb}`);
 	//console.log('Query Test', (await dbDel('dbInfo','dbName',`'testing'`)))

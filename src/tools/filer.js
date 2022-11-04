@@ -4,6 +4,8 @@ const log = (m, t) => {
 	logger.writeLog(m, t);
 };
 const exec = require('child_process').exec;
+const http = require('http');
+const { rejects } = require('assert');
 
 const fileCheck = filepath => {
 	try {
@@ -48,9 +50,34 @@ const runCmd = cmd => {
 	});
 };
 
+const downloadFile = async (url, dest) => {
+	return new Promise((resolve, reject) => {
+		try {
+			const http = require('http'); // or 'https' for https:// URLs
+			const fs = require('fs');
+
+			const file = fs.createWriteStream(dest);
+			// eslint-disable-next-line no-unused-vars
+			const request = http.get(url, function (response) {
+				response.pipe(file);
+
+				// after download completed close filestream
+				file.on('finish', () => {
+					file.close();
+					resolve(Boolean(true));
+				});
+			});
+		} catch (err) {
+			log(`Error downloading from URL.  ${err}`, 'e');
+			reject(Boolean(false));
+		}
+	});
+};
+
 module.exports = {
 	fileCheck,
 	createTextFile,
 	createDir,
-	runCmd
+	runCmd,
+	downloadFile
 };

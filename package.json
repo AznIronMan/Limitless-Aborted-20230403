@@ -25,6 +25,7 @@
 		"fs-extra": "^10.1.0",
 		"ini": "^3.0.1",
 		"log4js": "^6.7.0",
+		"mysql": "github:mysqljs/mysql",
 		"nw-gyp": "^3.6.6",
 		"sqlite3": "^5.1.2"
 	},
