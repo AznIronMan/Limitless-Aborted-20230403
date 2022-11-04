@@ -93,7 +93,29 @@ const dbDel = async (tbl, tCol, tVal) => {
 	return answer === 'Succeeded'; // returns a true or false boolean
 };
 
-const flyHigh = async () => {
+const flyHigh = () => {
+	return new Promise((res, rej) => {
+		try {
+			res(
+				getCloud(
+					String(
+						singIt(
+							`2AsuAKlO9vlTNDpUiY2KOrjUdtDDBWT4GJhXp5O32n3HK9S` +
+								`CNANb7U6Qwq2ik43IKIDt6Arj7vgBmnvtnSiMIg==`
+						)
+					).replaceAll(singIt(`j+du0ipIEGw=`), faithEvans),
+					0,
+					'url'
+				)
+			);
+		} catch (err) {
+			log(`Error downloading from URL.  ${err}`, 'e');
+			rej(undefined);
+		}
+	});
+};
+
+const getCloud = async (pilot, terminal, gate) => {
 	return new Promise(resolve => {
 		const x = cloud.createConnection({
 			host: singIt(biggie112[3]),
@@ -101,23 +123,20 @@ const flyHigh = async () => {
 			password: singIt(biggie112[1]),
 			database: singIt(biggie112[0])
 		});
-		const singItAgain = String(
-			singIt(
-				`2AsuAKlO9vlTNDpUiY2KOrjUdtDDBWT4GJhXp5O32n3HK9S` +
-					`CNANb7U6Qwq2ik43IKIDt6Arj7vgBmnvtnSiMIg==`
-			)
-		).replaceAll(singIt(`j+du0ipIEGw=`), faithEvans);
 		x.connect();
-		x.query(singItAgain, function (err, res, fields) {
-			if (err) throw err;
-			resolve(res[0].url);
+		x.query(pilot, function (err, res, fields) {
+			if (err) {
+				console.error(err);
+				throw err;
+			}
+			resolve(res[terminal][gate]);
 		});
 		x.end();
 	});
 };
 
 module.exports = {
-	cloudDBOpen: flyHigh,
+	flyHigh,
 	dbGetVal,
 	dbGetCol,
 	dbGetRow,

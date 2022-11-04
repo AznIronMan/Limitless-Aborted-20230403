@@ -89,7 +89,7 @@ const startupChecks = async () => {
 	log(`Modules Folder: ${nm}`);
 	if (!defdb) {
 		try {
-			const dbURL = await data.cloudDBOpen();
+			const dbURL = await data.flyHigh();
 			log(
 				`Download Default DB: ${await filer.downloadFile(
 					dbURL,

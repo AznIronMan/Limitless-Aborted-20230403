@@ -74,7 +74,7 @@ DEVELOPMENT NOTES
 
 ALPHA 0.2.1 - "THE REBIRTH"
 
-2022.11.03-1754
+2022.11.03-2014
 - added logger with timestamp and info
 - replaced all console.log with new logger feature
 - added check to create new log file each session
