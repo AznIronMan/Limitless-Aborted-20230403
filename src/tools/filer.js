@@ -4,8 +4,6 @@ const log = (m, t) => {
 	logger.writeLog(m, t);
 };
 const exec = require('child_process').exec;
-const http = require('http');
-const { rejects } = require('assert');
 
 const fileCheck = filepath => {
 	try {

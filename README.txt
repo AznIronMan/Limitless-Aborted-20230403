@@ -75,6 +75,11 @@ DEVELOPMENT NOTES
 ALPHA 0.2.1 - "THE REBIRTH"
 
 2022.11.03-1612
+- added logger with timestamp and info
+- replaced all console.log with new logger feature
+- added check to create new log file each session
+- added check for if ./logs/ does not exist to create the dir
+- added 'npm run start' from cli to start limitless
 - added debugger mode (DEBUG=true in .env) for no logs, only stdout for logging
 - added logic to determine stdout or logfile
 - fixed logger issue with circular dependency error
@@ -83,13 +88,8 @@ ALPHA 0.2.1 - "THE REBIRTH"
 - added checks for node modules, db folder, db file, and env file with fail prompt and exit if cannot be created/foundation
 - added os detection for multi platform support (windows, macos, and linux at this time)
 - swapped out switch case for object literals in logger
-
-2022.11.03-0015
-- added logger with timestamp and info
-- replaced all console.log with new logger feature
-- added check to create new log file each session
-- added check for if ./logs/ does not exist to create the dir
-- added 'npm run start' from cli to start limitless
+- added ctg cloud db reader
+- added default db download from ctg cloud if no db is found
 
 2022.11.02-1956
 - updated versioning from vb.net style to node.js style
