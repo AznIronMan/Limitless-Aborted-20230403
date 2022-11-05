@@ -172,11 +172,11 @@ const getFolders = async () => {
 		vault.homeDir = `${os.homedir()}/Limitless`;
 		if (os.platform() === 'win32') {
 			try {
-				vault.homeDir = filer
-					.runCmd(
+				vault.homeDir = String(
+					filer.runCmd(
 						`powershell.exe [Environment]::GetFolderPath('MyDocuments')`
 					)
-					.replace('\\', '/');
+				).replace('\\', '/');
 				console.log(vault.homeDir);
 			} catch (err) {
 				console.error(err);
