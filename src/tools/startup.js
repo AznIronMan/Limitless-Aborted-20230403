@@ -22,6 +22,11 @@ const envF = vault.envFile.replace('./', '');
 const pressanyKey = `There was an error, please check the logs.  Press any key to exit.`;
 
 const startupChecks = async () => {
+	try {
+		await filer.runCmd('npm install');
+	} catch (err) {
+		console.error(`FATAL ERROR when running 'npm install': `, err);
+	}
 	//home folder check
 	getFolders();
 	//debug check
