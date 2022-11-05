@@ -1,9 +1,10 @@
+const os = require('os');
 const squidInk = require('../tools/vault');
 const data = require('../tools/db');
 const filer = require('../tools/filer');
 const magic = require('../tools/magic');
 const dagger = magic.toLight(squidInk.magicWand[2], squidInk.magicWand[3]);
-const os = require('./opsys');
+const opsys = require('./opsys');
 const building = [
 	`${magic.toLight(dagger, squidInk.theCastle[0])}`,
 	`${magic.toLight(dagger, squidInk.theCastle[1])}`,
@@ -16,18 +17,19 @@ const log = (m, t) => {
 	logger.writeLog(m, t);
 };
 const tbox = require('./toolbox');
-
 const vault = require('./vault');
 const envF = vault.envFile.replace('./', '');
 const pressanyKey = `There was an error, please check the logs.  Press any key to exit.`;
 
 const startupChecks = async () => {
+	//home folder check
+	getFolders();
 	//debug check
 	vault.debug = filer.fileCheck(magic.toLight(dagger, squidInk.magicWand[1]));
 	//start logger
 	logger.createLog();
 	//os check
-	log(`Operating System: ${await os.getOS()}`);
+	log(`Operating System: ${await opsys.getOS()}`);
 	if (vault.opSys === undefined) {
 		log(`OS not detected, cannot continue.`, 'f');
 		errorExit();
@@ -158,6 +160,25 @@ const dbVerCheck = async () => {
 	log(response[0], response[3]);
 	if (response[1].length > 1) log(response[1], response[3]);
 	if (response[2].length > 1) log(response[2], response[3]);
+};
+
+const getFolders = async () => {
+	try {
+		vault.homeDir = `${os.homedir()}/Limitless`;
+		filer.createDir(vault.homeDir);
+	} catch {
+		const local = './.gamefiles';
+		if (!filer.fileCheck(local)) {
+			filer.createDir(local);
+		}
+		vault.homeDir = local;
+	}
+	vault.avaDir = `${vault.homeDir}${vault.folderNames[0]}`;
+	vault.dbDir = `${vault.homeDir}${vault.folderNames[1]}`;
+	vault.logDir = `${vault.homeDir}${vault.folderNames[2]}`;
+	vault.mscDir = `${vault.homeDir}${vault.folderNames[3]}`;
+	vault.savDir = `${vault.homeDir}${vault.folderNames[4]}`;
+	vault.sndDir = `${vault.homeDir}${vault.folderNames[5]}`;
 };
 
 const errorExit = async () => {

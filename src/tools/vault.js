@@ -32,12 +32,14 @@ const nmDir = './node_modules';
 const saveExt = '.limit';
 
 //game folders
-const avaDir = './avatars';
-const dbDir = './data';
-const logDir = './logs';
-const mscDir = './music';
-const savDir = './saves';
-const sndDir = './sound';
+const folderNames = [
+	`/avatars`,
+	`/data`,
+	`/logs`,
+	`/music`,
+	`/saves`,
+	`/sound`
+];
 
 module.exports = {
 	magicWand,
@@ -47,12 +49,14 @@ module.exports = {
 	debug: false,
 	opSys,
 	envFile,
-	avaDir,
-	dbDir,
-	logDir,
-	mscDir,
+	homeDir: './.gamefiles',
+	avaDir: './.gamefiles/avatars',
+	dbDir: './.gamefiles/data',
+	logDir: './.gamefiles/logs',
+	mscDir: './.gamefiles/music',
 	nmDir,
-	savDir,
-	sndDir,
-	saveExt
+	savDir: './.gamefiles/saves',
+	sndDir: './.gamefiles/sound',
+	saveExt,
+	folderNames
 };

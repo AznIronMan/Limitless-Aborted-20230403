@@ -111,10 +111,5 @@ e.sh
 sync.bat
 private/
 
-#hide game folders
-avatars/
-data/
-logs/
-music/
-saves/
-sound/
+#hide local gamefiles if created
+.gamefiles/

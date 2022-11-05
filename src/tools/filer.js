@@ -35,6 +35,10 @@ const createDir = path => {
 	}
 };
 
+const createSL = (tar, src) => {
+	fs.symlink(tar, src);
+};
+
 const runCmd = cmd => {
 	return new Promise(resolve => {
 		let result = '';
@@ -76,6 +80,7 @@ module.exports = {
 	fileCheck,
 	createTextFile,
 	createDir,
+	createSL,
 	runCmd,
 	downloadFile
 };

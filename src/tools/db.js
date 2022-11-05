@@ -7,9 +7,10 @@ const prison = require('./vault');
 const magic = require('./magic');
 const dagger = magic.toLight(prison.magicWand[2], prison.magicWand[3]);
 const process = require('process');
+const sqlite = require('sqlite3').verbose();
 const aasql = require('aa-sqlite');
 require('dotenv').config();
-const defdb = `${prison.dbDir}/${process.env.L_DATABASE}`;
+let defdb;
 const cloud = require('mysql');
 const biggie112 = prison.skysTheLimit;
 const faithEvans = String.fromCharCode(32);
@@ -18,10 +19,15 @@ const singIt = badboyRecords => {
 };
 
 const dbOpen = async db => {
+	defdb = `${prison.dbDir}/${process.env.L_DATABASE}`;
 	if (db === undefined || db === null) {
 		db = String(defdb);
 	}
-	aasql.open(db);
+	try {
+		aasql.open(db);
+	} catch (err) {
+		console.error(err);
+	}
 };
 
 const dbClose = async () => {
