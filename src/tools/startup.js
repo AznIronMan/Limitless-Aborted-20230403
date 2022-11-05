@@ -173,7 +173,7 @@ const getFolders = async () => {
 		if (os.platform() === 'win32') {
 			try {
 				vault.homeDir = String(
-					filer.runCmd(
+					await filer.runCmd(
 						`powershell.exe [Environment]::GetFolderPath('MyDocuments')`
 					)
 				).replace('\\', '/');
