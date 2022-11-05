@@ -174,7 +174,7 @@ const getFolders = async () => {
 			try {
 				vault.homeDir = String(
 					await filer.runCmd(
-						`powershell.exe [Environment]::GetFolderPath('MyDocuments')`
+						`powershell.exe "[Environment]::GetFolderPath('MyDocuments')"`
 					)
 				).replace('\\', '/');
 				console.log(vault.homeDir);
