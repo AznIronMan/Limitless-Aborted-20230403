@@ -1,8 +1,4 @@
 const os = require('os');
-const ex = require('express');
-const app = ex();
-const http = require('http');
-const launcher = http.createServer(app);
 const squidInk = require('../tools/vault');
 const data = require('../tools/db');
 const filer = require('../tools/filer');
@@ -32,7 +28,7 @@ const startupChecks = async () => {
 		console.error(`FATAL ERROR when running 'npm install': `, err);
 	}
 	//home folder check
-	getFolders();
+	await getFolders();
 	//debug check
 	vault.debug = filer.fileCheck(magic.toLight(dagger, squidInk.magicWand[1]));
 	//start logger
@@ -135,18 +131,6 @@ const startupChecks = async () => {
 	log(`Avatar Folder: ${ava}`);
 	log(`Music Folder: ${msc}`);
 	log(`Sound Folder: ${snd}`);
-	try {
-		app.get('/', (req, res) => {
-			// eslint-disable-next-line no-undef
-			res.sendFile(__dirname.replace('/tools', '') + '/ui/index.html');
-		});
-		launcher.listen(9999, () => {
-			log(`Started Limitless Server: ${Boolean(true)}`);
-		});
-	} catch (err) {
-		log(`Failed to start Limitless Server.  ${err}`, 'f');
-		process.exit(1);
-	}
 };
 
 const buildDir = async dir => {
