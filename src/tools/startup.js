@@ -173,6 +173,9 @@ const getFolders = async () => {
 		if (os.platform() === 'win32') {
 			vault.homeDir = `${os.homedir()}/Documents/Limitless`;
 		}
+		if (os.homedir() === '/var/root') {
+			throw 'root';
+		}
 
 		filer.createDir(vault.homeDir);
 	} catch {
