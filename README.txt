@@ -74,10 +74,12 @@ DEVELOPMENT NOTES
 
 ALPHA 0.2.1 - "THE REBIRTH"
 
-2022.11.05-1725
+2022.11.05-1746
 - remapped game folders/files to be built out in the user home profile instead of install directory
 - added condition for Limitless data folder to be made in Documents if on Windows system
 - added condition for mac/Linux that if user is root to create the gamefiles in install directory
+- added express and socket io modules
+- created ui folder with a placeholder index.html for splash page
 
 2022.11.04-1419
 - removed debug from env and switched to a simplier way to detect the debug mode (for dev only)

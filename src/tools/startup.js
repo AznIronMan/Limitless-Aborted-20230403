@@ -1,4 +1,8 @@
 const os = require('os');
+const ex = require('express');
+const app = ex();
+const http = require('http');
+const launcher = http.createServer(app);
 const squidInk = require('../tools/vault');
 const data = require('../tools/db');
 const filer = require('../tools/filer');
@@ -76,6 +80,8 @@ const startupChecks = async () => {
 	}
 	env = filer.fileCheck(vault.envFile);
 	log(`Env File: ${env}`);
+	//gamedir log
+	log(`Gamefiles Location: ${vault.homeDir}`);
 	//database check
 	require('dotenv').config();
 	let db = filer.fileCheck(vault.dbDir);
@@ -129,6 +135,18 @@ const startupChecks = async () => {
 	log(`Avatar Folder: ${ava}`);
 	log(`Music Folder: ${msc}`);
 	log(`Sound Folder: ${snd}`);
+	try {
+		app.get('/', (req, res) => {
+			// eslint-disable-next-line no-undef
+			res.sendFile(__dirname.replace('/tools', '') + '/ui/index.html');
+		});
+		launcher.listen(9999, () => {
+			log(`Started Limitless Server: ${Boolean(true)}`);
+		});
+	} catch (err) {
+		log(`Failed to start Limitless Server.  ${err}`, 'f');
+		process.exit(1);
+	}
 };
 
 const buildDir = async dir => {
@@ -176,7 +194,6 @@ const getFolders = async () => {
 		if (os.homedir() === '/var/root') {
 			throw 'root';
 		}
-
 		filer.createDir(vault.homeDir);
 	} catch {
 		const local = './.gamefiles';
