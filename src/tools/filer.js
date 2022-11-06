@@ -44,10 +44,8 @@ const runCmd = cmd => {
 		let result = '';
 		const child = exec(`${cmd}`);
 		child.stdout.on('data', function (data) {
-			//result += data.replace(/[\n\r]+/g, '');
-			result = data;
+			result += data.replace(/[\n\r]+/g, '');
 		});
-		console.log(result);
 		return child.on('close', function () {
 			resolve(result);
 		});

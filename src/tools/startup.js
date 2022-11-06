@@ -170,20 +170,6 @@ const dbVerCheck = async () => {
 const getFolders = async () => {
 	try {
 		vault.homeDir = `${os.homedir()}/Limitless`;
-		if (os.platform() === 'win32') {
-			try {
-				vault.homeDir = String(
-					await filer.runCmd(
-						`powershell.exe "[Environment]::GetFolderPath('MyDocuments')"`
-					)
-				).replace('\\', '/');
-				console.log(vault.homeDir);
-			} catch (err) {
-				console.error(err);
-				process.exit(0);
-			}
-		}
-
 		filer.createDir(vault.homeDir);
 	} catch {
 		const local = './.gamefiles';
