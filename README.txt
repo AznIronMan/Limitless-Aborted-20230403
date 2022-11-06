@@ -74,8 +74,9 @@ DEVELOPMENT NOTES
 
 ALPHA 0.2.1 - "THE REBIRTH"
 
-2022.11.05-1640
+2022.11.05-1718
 - remapped game folders/files to be built out in the user home profile instead of install directory
+- added condition for Limitless data folder to be made in Documents if on Windows system
 
 2022.11.04-1419
 - removed debug from env and switched to a simplier way to detect the debug mode (for dev only)
