@@ -39,6 +39,12 @@ const startupChecks = async () => {
 		log(`OS not detected, cannot continue.`, 'f');
 		errorExit();
 	}
+	//google api variable check
+	const abcAPI = await checkABCAPI();
+	if (abcAPI !== 'OK') {
+		log(`ABC API Check Error:  ${abcAPI}`, 'w');
+		log(`May get warnings on client launch.`, 'w');
+	}
 	//node modules check
 	try {
 		await filer.runCmd('npm install');
@@ -190,6 +196,71 @@ const getFolders = async () => {
 	vault.mscDir = `${vault.homeDir}${vault.folderNames[3]}`;
 	vault.savDir = `${vault.homeDir}${vault.folderNames[4]}`;
 	vault.sndDir = `${vault.homeDir}${vault.folderNames[5]}`;
+};
+
+const checkABCAPI = async () => {
+	const machineOS = os.platform();
+	const abc = [
+		magic.toLight(dagger, squidInk.magicWand[5]),
+		magic.toLight(dagger, squidInk.magicWand[6]),
+		magic.toLight(dagger, squidInk.magicWand[7])
+	];
+	let key, id, sec;
+	try {
+		switch (machineOS) {
+			case 'linux':
+				key = [
+					`set | grep ${abc[0]}}`,
+					`${abc[0]}=no`,
+					`export ${abc[0]}="no"`
+				];
+				id = [
+					`set | grep ${abc[1]}}`,
+					`${abc[1]}=no`,
+					`export ${abc[1]}="no"`
+				];
+				sec = [
+					`set | grep ${abc[2]}}`,
+					`${abc[2]}=no`,
+					`export ${abc[2]}="no"`
+				];
+				break;
+			case 'win32':
+				key = [`echo %${abc[0]}%`, 'no', `setx ${abc[0]}="no"`];
+				id = [`echo %${abc[1]}%`, 'no', `setx ${abc[1]}="no"`];
+				sec = [`echo %${abc[2]}%`, 'no', `setx ${abc[2]}="no"`];
+				break;
+			case 'darwin':
+				key = [
+					`set | grep ${abc[0]}}`,
+					`${abc[0]}=no`,
+					`export ${abc[0]}="no"`
+				];
+				id = [
+					`set | grep ${abc[1]}}`,
+					`${abc[1]}=no`,
+					`export ${abc[1]}="no"`
+				];
+				sec = [
+					`set | grep ${abc[2]}}`,
+					`${abc[2]}=no`,
+					`export ${abc[2]}="no"`
+				];
+				break;
+		}
+		if ((await filer.runCmd(key[0])) === key[1]) {
+			await filer.runCmd(key[2]);
+		}
+		if ((await filer.runCmd(id[0])) === key[1]) {
+			await filer.runCmd(id[2]);
+		}
+		if ((await filer.runCmd(sec[0])) === key[1]) {
+			await filer.runCmd(sec[2]);
+		}
+		return 'OK';
+	} catch (err) {
+		return err;
+	}
 };
 
 const errorExit = async () => {

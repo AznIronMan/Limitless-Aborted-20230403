@@ -74,11 +74,14 @@ DEVELOPMENT NOTES
 
 ALPHA 0.2.1 - "THE REBIRTH"
 
-2022.11.06-1700
+2022.11.06-2133
 - small gitignore modification for dev environment
 - removed tools from file structure and added assets and js instead
 - added clientLauncher to index after server is started
 - added server shutdown when client window is closed
+- added google api variable check and correction to prevent false warnings when starting client
+- changed main client page from index to welcome
+- added html and js to welcome as placeholder
 
 2022.11.05-1752
 - remapped game folders/files to be built out in the user home profile instead of install directory

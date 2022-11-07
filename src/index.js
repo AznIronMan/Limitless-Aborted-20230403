@@ -19,7 +19,7 @@ const serverLaunch = async () => {
 	try {
 		app.get('/', (req, res) => {
 			// eslint-disable-next-line no-undef
-			res.sendFile(__dirname + '/ui/index.html'); //placeholder for now
+			res.sendFile(__dirname + '/ui/welcome.html'); //placeholder for now
 		});
 		launcher.listen(9999, () => {
 			log(`Started Limitless Server: ${Boolean(true)}`);

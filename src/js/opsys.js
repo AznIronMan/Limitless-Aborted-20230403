@@ -5,19 +5,27 @@ let linuxInfo;
 
 const getOS = async () => {
 	const opSys = os.platform();
-	switch (opSys) {
-		case 'linux': //linux
+	let osname;
+	const systems = {
+		linux: async () => {
 			linuxInfo = ini.parse(fs.readFileSync('/etc/os-release', 'utf-8'));
-			return `${linuxInfo.NAME} ${linuxInfo.VERSION} ${
+			osname = `${linuxInfo.NAME} ${linuxInfo.VERSION} ${
 				linuxInfo.ID_LIKE
 			} ${os.machine()}`;
-		case 'win32': //windows
-			return `${os.version()} ${os.release} ${os.machine()}`;
-		case 'darwin':
-			return `MacOS ${os.release()}`;
-		default: //anything else
-			return 'OS UNSUPPORTED';
-	}
+		},
+		win32: async () => {
+			osname = `${os.version()} ${os.release} ${os.machine()}`;
+		},
+		darwin: async () => {
+			osname = `MacOS ${os.release()}`;
+		},
+		x: async () => {
+			osname = 'OS UNSUPPORTED';
+		}
+	};
+	(systems[opSys] || systems['x'])();
+
+	return osname;
 };
 
 module.exports = { getOS };

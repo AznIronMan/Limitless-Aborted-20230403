@@ -1,9 +1,13 @@
 //limitless info
 const magicWand = [
-	'WhatchaGonnaDo',
-	'ZhsQ9BJBpRblCgrV1WKIuA==',
-	'TryAgainDearie',
-	'DgLYSQq6iolSWAfjgR8R4wgbbY5zy6XE'
+	'WhatchaGonnaDo', //0
+	'ZhsQ9BJBpRblCgrV1WKIuA==', //1
+	'TryAgainDearie', //2
+	'DgLYSQq6iolSWAfjgR8R4wgbbY5zy6XE', //3
+	'AlphabetSoup', //4
+	'5peSwHD8jdr9lJm0A7p4og==', //5
+	'sQJCga5zgiVWgE0HAlH7BWmsVKT68Gvt5xfaTZfzpVg=', //6
+	'sQJCga5zgiVWgE0HAlH7BWDgq0U6J3ZkQgyFx1LRL0c=' //7
 ];
 const theCastle = [
 	'h3rvTyor0KM=',

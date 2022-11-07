@@ -84,7 +84,7 @@ const writeLog = (message, type) => {
 	}
 	const logger = log4js.getLogger();
 	const logType = type => {
-		var logID = {
+		const logID = {
 			t: function () {
 				logger.level = 'trace';
 				logger.trace(message);
