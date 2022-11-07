@@ -19,6 +19,7 @@
 	"homepage": "https://github.com/AznBlusuazn/Limitless#readme",
 	"dependencies": {
 		"aa-sqlite": "^1.0.29",
+		"chromium": "^3.0.3",
 		"dotenv": "^16.0.3",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-prettier": "^4.2.1",
@@ -28,7 +29,7 @@
 		"log4js": "^6.7.0",
 		"mysql": "github:mysqljs/mysql",
 		"nw-gyp": "^3.6.6",
-		"socket.io": "^4.5.3",
+		"screenz": "^1.0.0",
 		"sqlite3": "^5.1.2"
 	},
 	"devDependencies": {

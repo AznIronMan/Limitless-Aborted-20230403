@@ -7,9 +7,9 @@ const minutes = today.getMinutes();
 const seconds = today.getSeconds();
 const justDate = `${year}${month}${date}`;
 const fullDate = `${justDate}_${hours}${minutes}${seconds}`;
-const filer = require('../tools/filer');
+const filer = require('./filer');
 const log4js = require('log4js');
-const vault = require('../tools/vault');
+const vault = require('./vault');
 const process = require('process');
 const os = require('os');
 

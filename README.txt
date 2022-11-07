@@ -74,6 +74,12 @@ DEVELOPMENT NOTES
 
 ALPHA 0.2.1 - "THE REBIRTH"
 
+2022.11.06-1700
+- small gitignore modification for dev environment
+- removed tools from file structure and added assets and js instead
+- added clientLauncher to index after server is started
+- added server shutdown when client window is closed
+
 2022.11.05-1752
 - remapped game folders/files to be built out in the user home profile instead of install directory
 - added condition for Limitless data folder to be made in Documents if on Windows system
