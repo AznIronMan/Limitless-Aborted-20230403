@@ -1,6 +1,6 @@
 THIS VERSION HAS BEEN ABORTED DUE TO ENTIRE STRUCTURE CHANGES THAT WILL NEED TO OCCUR FOR THE GAME TO HAPPEN
 
-For the new version of this title, go to:  
+For the new version of this title, go to:   https://github.com/AznIronMan/Limitless
 
 The following is now an archive.
 
