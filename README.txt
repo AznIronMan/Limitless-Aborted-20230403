@@ -1,3 +1,9 @@
+THIS VERSION HAS BEEN ABORTED DUE TO ENTIRE STRUCTURE CHANGES THAT WILL NEED TO OCCUR FOR THE GAME TO HAPPEN
+
+For the new version of this title, go to:  
+
+The following is now an archive.
+
 =============================================
 LIMITLESS by Geoff Clark
 PUBLISHED by CLARKTRIBEGAMES LLC
